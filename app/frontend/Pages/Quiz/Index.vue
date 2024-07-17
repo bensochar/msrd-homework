@@ -46,8 +46,3 @@ import Quiz from './Quiz.vue'
 const { quizzes, flash } = defineProps(['quizzes', 'flash'])
 </script>
 
-<style scoped>
-.notice {
-  color: green;
-}
-</style>

@@ -35,9 +35,3 @@ const onDestroy = (e) => {
   }
 }
 </script>
-
-<style scoped>
-.notice {
-  color: green;
-}
-</style>

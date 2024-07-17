@@ -6,7 +6,6 @@ class Quiz < ApplicationRecord
   validates :birthdate, presence: true, comparison: { less_than: Time.zone.today }, if: -> { current_step == 'birthdate' }
   
   def current_step
-    # self[:current_step] ||= get_step
     @current_step ||= steps.first
   end
   

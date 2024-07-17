@@ -3,7 +3,6 @@ class QuizzesController < ApplicationController
 
   inertia_share flash: -> { flash.to_hash }
 
-  # GET /quizzes
   def index
     @quizzes = Quiz.all
     render inertia: 'Quiz/Index', props: {
@@ -13,16 +12,13 @@ class QuizzesController < ApplicationController
     }
   end
 
-  # GET /quizzes/1
   def show
     render inertia: 'Quiz/Show', props: {
       quiz: serialize_quiz(@quiz)
     }
   end
 
-  # GET /quizzes/new
   def new
-    session.delete(:quiz_step)
     session[:quiz_params] ||= {}
 
     @quiz = Quiz.new(session[:quiz_params])
@@ -33,14 +29,12 @@ class QuizzesController < ApplicationController
     }
   end
 
-  # GET /quizzes/1/edit
   def edit
     render inertia: 'Quiz/Edit', props: {
       quiz: serialize_quiz(@quiz)
     }
   end
 
-  # POST /quizzes
   def create
     session[:quiz_params].deep_merge!(quiz_params) if quiz_params
     @quiz = Quiz.new(session[:quiz_params])
@@ -49,8 +43,7 @@ class QuizzesController < ApplicationController
       if @quiz.last_step?
         if @quiz.all_valid?
           if @quiz.save
-            session.delete(:quiz_step)
-            session.delete(:quiz_params)
+            @quiz.current_step = @quiz.steps.first
             redirect_to @quiz, notice: "Quiz was successfully created."
           else
             redirect_to new_quiz_url, inertia: { errors: @quiz.errors }
@@ -64,6 +57,7 @@ class QuizzesController < ApplicationController
       end
       session[:quiz_step] = @quiz.current_step
     else
+      # render inertia: { errors: @quiz.errors }
       redirect_to new_quiz_url, inertia: { errors: @quiz.errors }
     end
   end
