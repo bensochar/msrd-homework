@@ -1,24 +1,32 @@
-# README
+# Homework for a wellness company
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To run locally...
 
-Things you may want to cover:
+### 1. Clone the repo
 
-* Ruby version
+```bash
+git clone https://github.com/bensochar/msrd-homework.git msrd
+cd msrd
+```
 
-* System dependencies
+### 2. Install dependencies
 
-* Configuration
+```bash
+bundle install
+nvm use
+nvm install
+```
 
-* Database creation
+### 3. Setup database
 
-* Database initialization
+```bash
+bundle exec rails db:setup
+```
 
-* How to run the test suite
+### 5. Run the app
 
-* Services (job queues, cache servers, search engines, etc.)
+Uses Foreman
 
-* Deployment instructions
-
-* ...
+```bash
+bin/dev
+```

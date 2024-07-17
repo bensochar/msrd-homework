@@ -22,9 +22,10 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
+    session.delete(:user_step)
+
     session[:user_params] ||= {}
     @user = User.new(session[:user_params])
-    # session[:user_step] = 'email'
     @user.current_step = session[:user_step]
     render inertia: 'User/New', props: {
       user: serialize_user(@user.attributes.merge(current_step: @user.current_step))
@@ -47,7 +48,10 @@ class UsersController < ApplicationController
       if @user.last_step?
         if @user.all_valid?
           if @user.save
+            session.delete(:user_step)
+            session.delete(:user_params)
             redirect_to @user, notice: "User was successfully created."
+
           else
             redirect_to new_user_url, inertia: { errors: @user.errors }
           end
@@ -80,7 +84,7 @@ class UsersController < ApplicationController
   end
 
   private
-  
+
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])

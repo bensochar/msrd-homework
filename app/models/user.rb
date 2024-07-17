@@ -1,7 +1,5 @@
 class User < ApplicationRecord
-  # attr_accessor :email, :weight, :birthdate
   attr_accessor :current_step
-  # attribute :current_step, :string, default: 'email'
   
   validates :email, presence: true, uniqueness: { case_sensitive: false }, if: -> { current_step == 'email' }
   validates :weight, presence: true, numericality: { greater_than: 0 }, if: -> { current_step == 'weight' }
