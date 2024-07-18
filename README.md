@@ -30,7 +30,7 @@ bundle exec rails db:setup
 
 ### 5. Run the app
 
-Uses Foreman
+Uses Foreman to start Rails server & Vite server
 
 ```bash
 bin/dev
